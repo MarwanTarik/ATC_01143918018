@@ -1,0 +1,7 @@
+﻿services:
+  eventmanagement.server:
+    image: eventmanagement.server
+    build:
+      context: .
+      dockerfile: Dockerfile
+
