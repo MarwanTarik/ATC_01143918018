@@ -1,4 +1,4 @@
-namespace EventManagement.Server.Services.AuthService;
+namespace EventManagement.Server.Services;
 
 public class AuthService
 {

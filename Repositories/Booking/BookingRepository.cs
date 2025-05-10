@@ -1,6 +1,6 @@
-HEADERnamespace a;
+namespace EventManagement.Server.Repositories.Booking;
 
-public class BookingRepository
+public class BookingRepository : IBookingRepository
 {
     
 }

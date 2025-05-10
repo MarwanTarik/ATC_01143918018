@@ -1,6 +1,6 @@
-namespace EventManagement.Server.Repositories;
+namespace EventManagement.Server.Repositories.Users;
 
-public class UsersRepository
+public class UsersRepository : IUsersRepository
 {
     
 }

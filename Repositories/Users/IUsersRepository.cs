@@ -1,6 +1,5 @@
-namespace EventManagement.Server.Repositories;
+namespace EventManagement.Server.Repositories.Users;
 
 public interface IUsersRepository
 {
-    
 }

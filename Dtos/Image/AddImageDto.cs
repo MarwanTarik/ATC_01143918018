@@ -1,6 +1,6 @@
-namespace EventManagement.Server.Dtos.Images;
+namespace EventManagement.Server.Dtos.Image;
 
-public class AddImageDto
-{
-    
-}
+public record AddImageDto (
+    string Url,
+    string ImageName,
+    string ImageType);
