@@ -33,7 +33,6 @@ public class Events
     
     public int ImageId { get; set; }
     
-    public virtual Images? Image { get; set; }
+    public virtual ICollection<Images>? Image { get; set; }
     public virtual EventStatus? Status { get; set; }
-    public virtual Users? User { get; set; }
 }

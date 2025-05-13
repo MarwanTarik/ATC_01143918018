@@ -11,6 +11,5 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Events> Events { get; set; }
     public DbSet<EventStatus> EventStatus { get; set; }
     public DbSet<Images> Images { get; set; }
-    public DbSet<Roles> Roles { get; set; }
     public DbSet<Users> Users { get; set; }
 }

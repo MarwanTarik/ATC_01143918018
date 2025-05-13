@@ -16,7 +16,6 @@ public class Bookings
    
     public DateTime UpdatedAt { get; set; }
     
-    public virtual Users? User { get; set; }
     public virtual Events? Event { get; set; }
-    public virtual EventStatus? BookingStatus { get; set; }
+    public virtual BookingStatus? BookingStatus { get; set; }
 }

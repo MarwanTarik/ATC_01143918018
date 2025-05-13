@@ -1,7 +1,7 @@
+using EventManagement.Server.Enums;
+
 namespace EventManagement.Server.Dtos.User;
 
 public record UserDto(
-    int Id,
-    string Name,
-    string Email,
-    RoleDto Role);
+    string Id,
+    Role Role);

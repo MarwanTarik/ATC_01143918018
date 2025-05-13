@@ -1,24 +1,16 @@
 using System.ComponentModel.DataAnnotations;
+using EventManagement.Server.Enums;
 
 namespace EventManagement.Server.Models;
 
 public class Users
 {
-    public int Id { get; set; }
+    [Key]
+    [StringLength(64)]
+    public required string Auth0UserId { get; set; } = string.Empty;
+    public required Role Role { get; set; }
     
-    [StringLength(255)]
-    public string Name { get; set; } = string.Empty;
-    
-    [StringLength(255)]
-    public string Email { get; set; } = string.Empty;
-    
-    public int RoleId { get; set; }
-    
-    [StringLength(500)]
-    public string HashedPassword { get; set; } = string.Empty;
-    
-    [StringLength(255)]
-    public string Salt { get; set; } = string.Empty;
-    
-    public virtual Roles? Role { get; set; }
+    public virtual ICollection<Events>? Events { get; set; }
+    public virtual ICollection<Bookings>? Bookings { get; set; }
+    public virtual ICollection<Images>? Images { get; set; }
 }

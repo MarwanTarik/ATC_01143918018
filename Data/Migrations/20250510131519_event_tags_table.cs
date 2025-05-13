@@ -60,7 +60,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "RoleName",
-                table: "Roles",
+                table: "Role",
                 type: "character varying(255)",
                 maxLength: 255,
                 nullable: false,
@@ -190,7 +190,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "RoleName",
-                table: "Roles",
+                table: "Role",
                 type: "text",
                 nullable: false,
                 oldClrType: typeof(string),
