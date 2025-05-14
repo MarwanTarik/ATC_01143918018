@@ -26,10 +26,13 @@ public class UsersRepository(ApplicationDbContext context) : Repository(context)
 
     public async Task<bool> DeleteUserById(string id)
     {
-        var rows = await _dbSet
-            .Where(u => u.Auth0UserId == id)
-            .ExecuteDeleteAsync();
-        
-        return rows > 0;
+        var user = await _dbSet
+            .FirstOrDefaultAsync(u => u.Auth0UserId == id);
+    
+        if (user == null)
+            return false;
+    
+        _dbSet.Remove(user);
+        return true;
     }
 }

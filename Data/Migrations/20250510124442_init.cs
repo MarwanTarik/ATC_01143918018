@@ -83,7 +83,7 @@ namespace EventManagement.Server.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "UsersController",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -148,7 +148,7 @@ namespace EventManagement.Server.Data.Migrations
                     table.ForeignKey(
                         name: "FK_Events_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "UsersController",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -184,7 +184,7 @@ namespace EventManagement.Server.Data.Migrations
                     table.ForeignKey(
                         name: "FK_Bookings_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "UsersController",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -226,7 +226,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",
-                table: "Users",
+                table: "UsersController",
                 column: "RoleId");
         }
 
@@ -252,7 +252,7 @@ namespace EventManagement.Server.Data.Migrations
                 name: "Images");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "UsersController");
 
             migrationBuilder.DropTable(
                 name: "Role");

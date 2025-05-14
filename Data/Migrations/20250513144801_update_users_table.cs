@@ -40,11 +40,11 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.DropColumn(
                 name: "Email",
-                table: "Users");
+                table: "UsersController");
 
             migrationBuilder.DropColumn(
                 name: "Name",
-                table: "Users");
+                table: "UsersController");
 
             migrationBuilder.DropColumn(
                 name: "UserAuth0UserId",
@@ -110,14 +110,14 @@ namespace EventManagement.Server.Data.Migrations
                 name: "FK_Bookings_Users_UsersAuth0UserId",
                 table: "Bookings",
                 column: "UsersAuth0UserId",
-                principalTable: "Users",
+                principalTable: "UsersController",
                 principalColumn: "Auth0UserId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Events_Users_UsersAuth0UserId",
                 table: "Events",
                 column: "UsersAuth0UserId",
-                principalTable: "Users",
+                principalTable: "UsersController",
                 principalColumn: "Auth0UserId");
 
             migrationBuilder.AddForeignKey(
@@ -131,7 +131,7 @@ namespace EventManagement.Server.Data.Migrations
                 name: "FK_Images_Users_UsersAuth0UserId",
                 table: "Images",
                 column: "UsersAuth0UserId",
-                principalTable: "Users",
+                principalTable: "UsersController",
                 principalColumn: "Auth0UserId");
         }
 
@@ -192,7 +192,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "Email",
-                table: "Users",
+                table: "UsersController",
                 type: "character varying(255)",
                 maxLength: 255,
                 nullable: false,
@@ -200,7 +200,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "Name",
-                table: "Users",
+                table: "UsersController",
                 type: "character varying(255)",
                 maxLength: 255,
                 nullable: false,
@@ -247,7 +247,7 @@ namespace EventManagement.Server.Data.Migrations
                 name: "FK_Bookings_Users_UserAuth0UserId",
                 table: "Bookings",
                 column: "UserAuth0UserId",
-                principalTable: "Users",
+                principalTable: "UsersController",
                 principalColumn: "Auth0UserId",
                 onDelete: ReferentialAction.Cascade);
 
@@ -263,7 +263,7 @@ namespace EventManagement.Server.Data.Migrations
                 name: "FK_Events_Users_UserAuth0UserId",
                 table: "Events",
                 column: "UserAuth0UserId",
-                principalTable: "Users",
+                principalTable: "UsersController",
                 principalColumn: "Auth0UserId",
                 onDelete: ReferentialAction.Cascade);
         }

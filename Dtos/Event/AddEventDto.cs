@@ -7,5 +7,5 @@ public record AddEventDto(
     decimal Price,
     string Venue,
     int AvailableTickets,
-    int ImageId, 
+    int StatusId,
     IEnumerable<int> Tags);

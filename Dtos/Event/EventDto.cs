@@ -3,7 +3,7 @@ using EventManagement.Server.Dtos.User;
 
 namespace EventManagement.Server.Dtos.Event;
 
-public record EventResponseDto(
+public record EventDto(
     int Id,
     string Name,
     string Description,
@@ -12,8 +12,6 @@ public record EventResponseDto(
     string Venue,
     int AvailableTickets,
     StatusDto Status,
-    IEnumerable<ImageDto> Images,
-    IEnumerable<TagDto> Tags,
     DateTime CreatedAt,
     DateTime UpdatedAt,
-    int CreatedBy);
+    string CreatedBy);

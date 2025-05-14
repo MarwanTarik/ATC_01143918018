@@ -21,18 +21,18 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Users_Roles_RoleId",
-                table: "Users");
+                table: "UsersController");
 
             migrationBuilder.DropTable(
                 name: "Role");
 
             migrationBuilder.DropPrimaryKey(
                 name: "PK_Users",
-                table: "Users");
+                table: "UsersController");
 
             migrationBuilder.DropIndex(
                 name: "IX_Users_RoleId",
-                table: "Users");
+                table: "UsersController");
 
             migrationBuilder.DropIndex(
                 name: "IX_Events_UserId",
@@ -44,19 +44,19 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.DropColumn(
                 name: "Id",
-                table: "Users");
+                table: "UsersController");
 
             migrationBuilder.DropColumn(
                 name: "HashedPassword",
-                table: "Users");
+                table: "UsersController");
 
             migrationBuilder.DropColumn(
                 name: "Salt",
-                table: "Users");
+                table: "UsersController");
 
             migrationBuilder.RenameColumn(
                 name: "RoleId",
-                table: "Users",
+                table: "UsersController",
                 newName: "Role");
 
             migrationBuilder.RenameColumn(
@@ -66,7 +66,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "Auth0UserId",
-                table: "Users",
+                table: "UsersController",
                 type: "character varying(64)",
                 maxLength: 64,
                 nullable: false,
@@ -88,7 +88,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Users",
-                table: "Users",
+                table: "UsersController",
                 column: "Auth0UserId");
 
             migrationBuilder.CreateIndex(
@@ -105,7 +105,7 @@ namespace EventManagement.Server.Data.Migrations
                 name: "FK_Bookings_Users_UserAuth0UserId",
                 table: "Bookings",
                 column: "UserAuth0UserId",
-                principalTable: "Users",
+                principalTable: "UsersController",
                 principalColumn: "Auth0UserId",
                 onDelete: ReferentialAction.Cascade);
 
@@ -113,7 +113,7 @@ namespace EventManagement.Server.Data.Migrations
                 name: "FK_Events_Users_UserAuth0UserId",
                 table: "Events",
                 column: "UserAuth0UserId",
-                principalTable: "Users",
+                principalTable: "UsersController",
                 principalColumn: "Auth0UserId",
                 onDelete: ReferentialAction.Cascade);
         }
@@ -131,7 +131,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.DropPrimaryKey(
                 name: "PK_Users",
-                table: "Users");
+                table: "UsersController");
 
             migrationBuilder.DropIndex(
                 name: "IX_Events_UserAuth0UserId",
@@ -143,7 +143,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.DropColumn(
                 name: "Auth0UserId",
-                table: "Users");
+                table: "UsersController");
 
             migrationBuilder.DropColumn(
                 name: "UserAuth0UserId",
@@ -155,7 +155,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.RenameColumn(
                 name: "Role",
-                table: "Users",
+                table: "UsersController",
                 newName: "RoleId");
 
             migrationBuilder.RenameColumn(
@@ -165,7 +165,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.AddColumn<int>(
                 name: "Id",
-                table: "Users",
+                table: "UsersController",
                 type: "integer",
                 nullable: false,
                 defaultValue: 0)
@@ -173,7 +173,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "HashedPassword",
-                table: "Users",
+                table: "UsersController",
                 type: "character varying(500)",
                 maxLength: 500,
                 nullable: false,
@@ -181,7 +181,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "Salt",
-                table: "Users",
+                table: "UsersController",
                 type: "character varying(255)",
                 maxLength: 255,
                 nullable: false,
@@ -189,7 +189,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Users",
-                table: "Users",
+                table: "UsersController",
                 column: "Id");
 
             migrationBuilder.CreateTable(
@@ -207,7 +207,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",
-                table: "Users",
+                table: "UsersController",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
@@ -224,7 +224,7 @@ namespace EventManagement.Server.Data.Migrations
                 name: "FK_Bookings_Users_UserId",
                 table: "Bookings",
                 column: "UserId",
-                principalTable: "Users",
+                principalTable: "UsersController",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
@@ -232,13 +232,13 @@ namespace EventManagement.Server.Data.Migrations
                 name: "FK_Events_Users_UserId",
                 table: "Events",
                 column: "UserId",
-                principalTable: "Users",
+                principalTable: "UsersController",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Users_Roles_RoleId",
-                table: "Users",
+                table: "UsersController",
                 column: "RoleId",
                 principalTable: "Role",
                 principalColumn: "Id",

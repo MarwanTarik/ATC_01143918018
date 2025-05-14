@@ -29,10 +29,11 @@ public class Events
     
     public int StatusId { get; set; }
     
-    public int UserId { get; set; }
+    [MaxLength(255)]
+    public required string UserId { get; set; }
     
     public int ImageId { get; set; }
     
-    public virtual ICollection<Images>? Image { get; set; }
+    public virtual ICollection<Images>? Images { get; set; }
     public virtual EventStatus? Status { get; set; }
 }

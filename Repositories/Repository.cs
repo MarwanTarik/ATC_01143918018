@@ -4,8 +4,9 @@ namespace EventManagement.Server.Repositories;
 
 public class Repository(ApplicationDbContext context) : IRepository
 {
-    public async Task SaveAsync()
+    public async Task<int> SaveAsync()
     {
-        await context.SaveChangesAsync();
+        var affected = await context.SaveChangesAsync();
+        return affected;
     }
 }

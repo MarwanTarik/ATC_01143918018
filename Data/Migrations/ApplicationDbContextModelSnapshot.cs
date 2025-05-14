@@ -222,7 +222,7 @@ namespace EventManagement.Server.Data.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("EventManagement.Server.Models.Users", b =>
+            modelBuilder.Entity("EventManagement.Server.Models.UsersController", b =>
                 {
                     b.Property<string>("Auth0UserId")
                         .HasMaxLength(64)
@@ -233,7 +233,7 @@ namespace EventManagement.Server.Data.Migrations
 
                     b.HasKey("Auth0UserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("UsersController");
                 });
 
             modelBuilder.Entity("EventManagement.Server.Models.Bookings", b =>
@@ -250,7 +250,7 @@ namespace EventManagement.Server.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EventManagement.Server.Models.Users", null)
+                    b.HasOne("EventManagement.Server.Models.UsersController", null)
                         .WithMany("Bookings")
                         .HasForeignKey("UsersAuth0UserId");
 
@@ -267,7 +267,7 @@ namespace EventManagement.Server.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EventManagement.Server.Models.Users", null)
+                    b.HasOne("EventManagement.Server.Models.UsersController", null)
                         .WithMany("Events")
                         .HasForeignKey("UsersAuth0UserId");
 
@@ -280,7 +280,7 @@ namespace EventManagement.Server.Data.Migrations
                         .WithMany("Image")
                         .HasForeignKey("EventsId");
 
-                    b.HasOne("EventManagement.Server.Models.Users", null)
+                    b.HasOne("EventManagement.Server.Models.UsersController", null)
                         .WithMany("Images")
                         .HasForeignKey("UsersAuth0UserId");
                 });
@@ -290,7 +290,7 @@ namespace EventManagement.Server.Data.Migrations
                     b.Navigation("Image");
                 });
 
-            modelBuilder.Entity("EventManagement.Server.Models.Users", b =>
+            modelBuilder.Entity("EventManagement.Server.Models.UsersController", b =>
                 {
                     b.Navigation("Bookings");
 

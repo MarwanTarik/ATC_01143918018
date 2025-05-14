@@ -24,7 +24,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Salt",
-                table: "Users",
+                table: "UsersController",
                 type: "character varying(255)",
                 maxLength: 255,
                 nullable: false,
@@ -33,7 +33,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
-                table: "Users",
+                table: "UsersController",
                 type: "character varying(255)",
                 maxLength: 255,
                 nullable: false,
@@ -42,7 +42,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "HashedPassword",
-                table: "Users",
+                table: "UsersController",
                 type: "character varying(500)",
                 maxLength: 500,
                 nullable: false,
@@ -51,7 +51,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Email",
-                table: "Users",
+                table: "UsersController",
                 type: "character varying(255)",
                 maxLength: 255,
                 nullable: false,
@@ -154,7 +154,7 @@ namespace EventManagement.Server.Data.Migrations
         {
             migrationBuilder.AlterColumn<string>(
                 name: "Salt",
-                table: "Users",
+                table: "UsersController",
                 type: "text",
                 nullable: false,
                 oldClrType: typeof(string),
@@ -163,7 +163,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
-                table: "Users",
+                table: "UsersController",
                 type: "text",
                 nullable: false,
                 oldClrType: typeof(string),
@@ -172,7 +172,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "HashedPassword",
-                table: "Users",
+                table: "UsersController",
                 type: "text",
                 nullable: false,
                 oldClrType: typeof(string),
@@ -181,7 +181,7 @@ namespace EventManagement.Server.Data.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Email",
-                table: "Users",
+                table: "UsersController",
                 type: "text",
                 nullable: false,
                 oldClrType: typeof(string),

@@ -9,7 +9,7 @@ namespace EventManagement.Server.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize(Policy = nameof(Policies.RequireAnyRole))]
-public class Users(UsersService usersService) : ControllerBase
+public class UsersController(UsersService usersService) : ControllerBase
 {
     [HttpGet("{id}")]
     public async Task<UserDto?> Get(string id)
