@@ -1,8 +1,8 @@
 namespace EventManagement.Server.Enums;
 
-public enum Policies
+public enum PoliciesEnum
 {
-    RequireAdminRole,
+    RequireAdminRole = 1,
     RequireUserRole,
     RequireAnyRole
 }

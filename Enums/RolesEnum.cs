@@ -1,7 +1,7 @@
 namespace EventManagement.Server.Enums;
 
-public enum Role
+public enum RolesEnum
 {
-    admin,
+    admin = 1,
     user
 }

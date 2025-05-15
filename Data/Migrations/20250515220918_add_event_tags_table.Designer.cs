@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EventManagement.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250513144801_update_users_table")]
-    partial class update_users_table
+    [Migration("20250515220918_add_event_tags_table")]
+    partial class add_event_tags_table
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,6 +41,18 @@ namespace EventManagement.Server.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BookingStatus");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Status = "Booked"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Status = "Cancelled"
+                        });
                 });
 
             modelBuilder.Entity("EventManagement.Server.Models.Bookings", b =>
@@ -66,8 +78,10 @@ namespace EventManagement.Server.Data.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.Property<string>("UsersAuth0UserId")
                         .HasColumnType("character varying(64)");
@@ -99,6 +113,37 @@ namespace EventManagement.Server.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EventStatus");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Status = "Ongoing"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Status = "Completed"
+                        });
+                });
+
+            modelBuilder.Entity("EventManagement.Server.Models.EventTags", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EventTags");
                 });
 
             modelBuilder.Entity("EventManagement.Server.Models.Events", b =>
@@ -123,6 +168,9 @@ namespace EventManagement.Server.Data.Migrations
                     b.Property<DateTime>("EventDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int?>("EventTagsId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("ImageId")
                         .HasColumnType("integer");
 
@@ -140,8 +188,10 @@ namespace EventManagement.Server.Data.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.Property<string>("UsersAuth0UserId")
                         .HasColumnType("character varying(64)");
@@ -152,6 +202,8 @@ namespace EventManagement.Server.Data.Migrations
                         .HasColumnType("character varying(255)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EventTagsId");
 
                     b.HasIndex("StatusId");
 
@@ -215,6 +267,9 @@ namespace EventManagement.Server.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("EventTagsId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Tag")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -222,7 +277,61 @@ namespace EventManagement.Server.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.HasIndex("EventTagsId");
+
+                    b.ToTable("Tags");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Tag = "Music"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Tag = "Sports"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Tag = "Arts"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Tag = "Technology"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Tag = "Food"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Tag = "Travel"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Tag = "Health"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Tag = "Education"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Tag = "Environment"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Tag = "Community"
+                        });
                 });
 
             modelBuilder.Entity("EventManagement.Server.Models.Users", b =>
@@ -231,7 +340,7 @@ namespace EventManagement.Server.Data.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
 
-                    b.Property<int>("Role")
+                    b.Property<int>("RolesEnum")
                         .HasColumnType("integer");
 
                     b.HasKey("Auth0UserId");
@@ -264,6 +373,10 @@ namespace EventManagement.Server.Data.Migrations
 
             modelBuilder.Entity("EventManagement.Server.Models.Events", b =>
                 {
+                    b.HasOne("EventManagement.Server.Models.EventTags", null)
+                        .WithMany("Event")
+                        .HasForeignKey("EventTagsId");
+
                     b.HasOne("EventManagement.Server.Models.EventStatus", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId")
@@ -280,7 +393,7 @@ namespace EventManagement.Server.Data.Migrations
             modelBuilder.Entity("EventManagement.Server.Models.Images", b =>
                 {
                     b.HasOne("EventManagement.Server.Models.Events", null)
-                        .WithMany("Image")
+                        .WithMany("Images")
                         .HasForeignKey("EventsId");
 
                     b.HasOne("EventManagement.Server.Models.Users", null)
@@ -288,9 +401,23 @@ namespace EventManagement.Server.Data.Migrations
                         .HasForeignKey("UsersAuth0UserId");
                 });
 
+            modelBuilder.Entity("EventManagement.Server.Models.Tags", b =>
+                {
+                    b.HasOne("EventManagement.Server.Models.EventTags", null)
+                        .WithMany("Tag")
+                        .HasForeignKey("EventTagsId");
+                });
+
+            modelBuilder.Entity("EventManagement.Server.Models.EventTags", b =>
+                {
+                    b.Navigation("Event");
+
+                    b.Navigation("Tag");
+                });
+
             modelBuilder.Entity("EventManagement.Server.Models.Events", b =>
                 {
-                    b.Navigation("Image");
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("EventManagement.Server.Models.Users", b =>

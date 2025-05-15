@@ -2,10 +2,10 @@ using EventManagement.Server.Dtos.Event;
 
 namespace EventManagement.Server.Dtos.Booking;
 
-public record BookingResponseDto(
+public record BookingDto(
     int Id,
     int EventId,
-    int UserId,
+    string UserId,
     int NumberOfTickets, 
     StatusDto Status, 
     DateTime CreatedAt,

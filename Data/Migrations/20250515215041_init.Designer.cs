@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EventManagement.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250510131519_event_tags_table")]
-    partial class event_tags_table
+    [Migration("20250515215041_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,6 +41,18 @@ namespace EventManagement.Server.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BookingStatus");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Status = "Booked"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Status = "Cancelled"
+                        });
                 });
 
             modelBuilder.Entity("EventManagement.Server.Models.Bookings", b =>
@@ -66,8 +78,13 @@ namespace EventManagement.Server.Data.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("UsersAuth0UserId")
+                        .HasColumnType("character varying(64)");
 
                     b.HasKey("Id");
 
@@ -75,7 +92,7 @@ namespace EventManagement.Server.Data.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UsersAuth0UserId");
 
                     b.ToTable("Bookings");
                 });
@@ -96,6 +113,18 @@ namespace EventManagement.Server.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EventStatus");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Status = "Ongoing"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Status = "Completed"
+                        });
                 });
 
             modelBuilder.Entity("EventManagement.Server.Models.Events", b =>
@@ -137,8 +166,13 @@ namespace EventManagement.Server.Data.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("UsersAuth0UserId")
+                        .HasColumnType("character varying(64)");
 
                     b.Property<string>("Venue")
                         .IsRequired()
@@ -147,11 +181,9 @@ namespace EventManagement.Server.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ImageId");
-
                     b.HasIndex("StatusId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UsersAuth0UserId");
 
                     b.ToTable("Events");
                 });
@@ -163,6 +195,12 @@ namespace EventManagement.Server.Data.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("EventsId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("ImageName")
                         .IsRequired()
@@ -182,33 +220,19 @@ namespace EventManagement.Server.Data.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("UploadedAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("UsersAuth0UserId")
+                        .HasColumnType("character varying(64)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("EventsId");
+
+                    b.HasIndex("UsersAuth0UserId");
 
                     b.ToTable("Images");
-                });
-
-            modelBuilder.Entity("EventManagement.Server.Models.Roles", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("RoleName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("EventManagement.Server.Models.Tags", b =>
@@ -227,49 +251,77 @@ namespace EventManagement.Server.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Tag = "Music"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Tag = "Sports"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Tag = "Arts"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Tag = "Technology"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Tag = "Food"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Tag = "Travel"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Tag = "Health"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Tag = "Education"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Tag = "Environment"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Tag = "Community"
+                        });
                 });
 
             modelBuilder.Entity("EventManagement.Server.Models.Users", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Auth0UserId")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<int>("RolesEnum")
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<string>("HashedPassword")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Salt")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
+                    b.HasKey("Auth0UserId");
 
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("EventManagement.Server.Models.Bookings", b =>
                 {
-                    b.HasOne("EventManagement.Server.Models.EventStatus", "BookingStatus")
+                    b.HasOne("EventManagement.Server.Models.BookingStatus", "BookingStatus")
                         .WithMany()
                         .HasForeignKey("BookingStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -281,55 +333,53 @@ namespace EventManagement.Server.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EventManagement.Server.Models.Users", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("EventManagement.Server.Models.Users", null)
+                        .WithMany("Bookings")
+                        .HasForeignKey("UsersAuth0UserId");
 
                     b.Navigation("BookingStatus");
 
                     b.Navigation("Event");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EventManagement.Server.Models.Events", b =>
                 {
-                    b.HasOne("EventManagement.Server.Models.Images", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("EventManagement.Server.Models.EventStatus", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EventManagement.Server.Models.Users", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Image");
+                    b.HasOne("EventManagement.Server.Models.Users", null)
+                        .WithMany("Events")
+                        .HasForeignKey("UsersAuth0UserId");
 
                     b.Navigation("Status");
+                });
 
-                    b.Navigation("User");
+            modelBuilder.Entity("EventManagement.Server.Models.Images", b =>
+                {
+                    b.HasOne("EventManagement.Server.Models.Events", null)
+                        .WithMany("Images")
+                        .HasForeignKey("EventsId");
+
+                    b.HasOne("EventManagement.Server.Models.Users", null)
+                        .WithMany("Images")
+                        .HasForeignKey("UsersAuth0UserId");
+                });
+
+            modelBuilder.Entity("EventManagement.Server.Models.Events", b =>
+                {
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("EventManagement.Server.Models.Users", b =>
                 {
-                    b.HasOne("EventManagement.Server.Models.Roles", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Bookings");
 
-                    b.Navigation("Role");
+                    b.Navigation("Events");
+
+                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

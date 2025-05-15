@@ -8,7 +8,7 @@ namespace EventManagement.Server.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize(Policy = nameof(Policies.RequireAnyRole))]
+[Authorize(Policy = nameof(PoliciesEnum.RequireAnyRole))]
 public class UsersController(UsersService usersService) : ControllerBase
 {
     [HttpGet("{id}")]

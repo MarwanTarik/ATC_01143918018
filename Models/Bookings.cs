@@ -1,10 +1,13 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace EventManagement.Server.Models;
 
 public class Bookings
 {
     public int Id { get; set; }
     
-    public int UserId { get; set; }
+    [MaxLength(255)]
+    public required string UserId { get; set; }
     
     public int EventId { get; set; }
     

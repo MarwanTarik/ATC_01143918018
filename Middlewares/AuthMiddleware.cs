@@ -19,7 +19,7 @@ public class AuthMiddleware(RequestDelegate next)
         
         
         var roleString = context.User.FindFirst("http://localhost:5105/roles")?.Value;
-        var isParsed = Enum.TryParse<Role>(roleString, true, out var roleEnum);
+        var isParsed = Enum.TryParse<RolesEnum>(roleString, true, out var roleEnum);
         var sub = context.User.Identity?.Name;
         
         if (string.IsNullOrEmpty(sub) 

@@ -60,16 +60,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
 
-// Authorization Policies
+// Authorization PoliciesEnum
 var roleClaim = appOptions?.Auth0RoleClaim;
 
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy(nameof(Policies.RequireAdminRole), policy =>
-        policy.RequireClaim(roleClaim, nameof(Role.admin)))
-    .AddPolicy(nameof(Policies.RequireUserRole), policy =>
-        policy.RequireClaim(roleClaim, nameof(Role.user)))
-    .AddPolicy(nameof(Policies.RequireAnyRole), policy =>
-        policy.RequireClaim(roleClaim, nameof(Role.admin), nameof(Role.user)));
+    .AddPolicy(nameof(PoliciesEnum.RequireAdminRole), policy =>
+        policy.RequireClaim(roleClaim, nameof(RolesEnum.admin)))
+    .AddPolicy(nameof(PoliciesEnum.RequireUserRole), policy =>
+        policy.RequireClaim(roleClaim, nameof(RolesEnum.user)))
+    .AddPolicy(nameof(PoliciesEnum.RequireAnyRole), policy =>
+        policy.RequireClaim(roleClaim, nameof(RolesEnum.admin), nameof(RolesEnum.user)));
 
 // Register Services in DI Container
 builder.Services.AddScoped<IRepository, Repository>();

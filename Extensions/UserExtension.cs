@@ -1,4 +1,5 @@
 using EventManagement.Server.Dtos.User;
+using EventManagement.Server.Enums;
 using EventManagement.Server.Models;
 
 namespace EventManagement.Server.Extentions;
@@ -9,7 +10,7 @@ public static class UserExtension
     {
         return new UserDto(
             Id: user.Auth0UserId,
-            Role: user.Role);
+            Role: (RolesEnum)user.RoleId);
     }
 
     public static Users ToModel(this UserDto dto)
@@ -17,7 +18,7 @@ public static class UserExtension
         return new Users
         {
             Auth0UserId = dto.Id,
-            Role = dto.Role
+            RoleId = (int)dto.Role
         };
     }
 }
