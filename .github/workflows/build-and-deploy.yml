@@ -10,12 +10,17 @@ on:
 
 env:
     AZURE_WEBAPP_NAME: 'event-management-service'
-    AZURE_WEBAPP_PACKAGE_PATH: '.'
+    AZURE_WEBAPP_PACKAGE_PATH: './publish'
     AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
     DOTNET_VERSION: '9.x'
     SOLUTION_FILE: 'EventManagement.Server/EventManagement.Server.sln'
     API_PROJECT_FILE: 'EventManagement.Server/EventManagement.Server.csproj'
     PUBLISH_DIR: './publish'
+    AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+    AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
+    AUTH0_ROLE_CLAIM: ${{ secrets.AUTH0_ROLE_CLAIM }}
+    CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+    ASPNETCORE_ENVIRONMENT: 'Production' 
 
 jobs:
     build-and-test:
@@ -24,10 +29,10 @@ jobs:
 
         steps:
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
 
             - name: Set up .NET
-              uses: actions/setup-dotnet@v2
+              uses: actions/setup-dotnet@v4
               with:
                 dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -64,3 +69,53 @@ jobs:
                 app-name: ${{ env.AZURE_WEBAPP_NAME }}
                 publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
                 package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+            
+            - name: Configure App Settings
+              uses: azure/appservice-settings@v1
+              with:
+                app-name: ${{ env.AZURE_WEBAPP_NAME }}
+                app-settings-json: |
+                    [
+                        {
+                        "name": "Auth:Domain",
+                        "value": "${{env.AUTH0_DOMAIN}}",
+                        "slotSetting": false
+                        },
+                        {
+                        "name": "Auth:Audience",
+                        "value": "${{env.AUTH0_AUDIENCE}}",
+                        "slotSetting": false
+                        },
+                        {
+                        "name": "Application:Auth0RoleClaim",
+                        "value": "${{env.AUTH0_ROLE_CLAIM}}",
+                        "slotSetting": false
+                        },
+                        {
+                        "name": "DB:ConnectionString",
+                        "value": "${{env.CONNECTION_STRING}}",
+                        "slotSetting": false
+                        }
+                    ]
+                mask-inputs: true
+    
+    migrate-database:
+        name: Run Database Migrations
+        runs-on: ubuntu-latest
+        needs: [deploy]
+        
+        steps:
+            - name: Install EF Tools
+              run: dotnet tool install --global dotnet-ef
+
+            - name: Add EF to PATH
+              run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Update Database
+              run: dotnet ef database update --project EventManagement.Server/EventManagement.Server.csproj --connection "${{ env.CONNECTION_STRING }}"
+              env:
+                ASPNETCORE_ENVIRONMENT: Production
+                CONNECTION_STRING: ${{ env.CONNECTION_STRING }}
