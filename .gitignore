@@ -1,7 +1,8 @@
-bin/
-obj/
-/packages/
-riderModule.iml
-/_ReSharper.Caches/
-appsettings.Development.json
-/.idea
+/EventManagement.Server/bin/
+/EventManagement.Server/obj/
+/EventManagement.Server//packages/
+/EventManagement.Server/riderModule.iml
+/EventManagement.Server/_ReSharper.Caches/
+/EventManagement.Server/appsettings.Development.json
+/EventManagement.Server/.idea
+/Instruction
