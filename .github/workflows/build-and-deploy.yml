@@ -82,28 +82,12 @@ jobs:
               with:
                 app-name: ${{ env.AZURE_WEBAPP_NAME }}
                 app-settings-json: |
-                    [
                         {
-                        "name": "Auth:Domain",
-                        "value": "${{env.AUTH0_DOMAIN}}",
-                        "slotSetting": false
-                        },
-                        {
-                        "name": "Auth:Audience",
-                        "value": "${{env.AUTH0_AUDIENCE}}",
-                        "slotSetting": false
-                        },
-                        {
-                        "name": "Application:Auth0RoleClaim",
-                        "value": "${{env.AUTH0_ROLE_CLAIM}}",
-                        "slotSetting": false
-                        },
-                        {
-                        "name": "DB:ConnectionString",
-                        "value": "${{env.CONNECTION_STRING}}",
-                        "slotSetting": false
+                            "Auth:Domain": "${{env.AUTH0_DOMAIN}}",
+                            "Auth:Audience": "${{env.AUTH0_AUDIENCE}}",
+                            "Application:Auth0RoleClaim": "${{env.AUTH0_ROLE_CLAIM}}",
+                            "DB:ConnectionString": "${{env.CONNECTION_STRING}}"
                         }
-                    ]
                 mask-inputs: true
     
     migrate-database:
