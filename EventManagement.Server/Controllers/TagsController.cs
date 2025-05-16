@@ -1,10 +1,13 @@
+using EventManagement.Server.Enums;
 using EventManagement.Server.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventManagement.Server.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Policy = nameof(PoliciesEnum.RequireAnyRole))]
 public class TagsController(TagsService tagsService) : ControllerBase
 {
     [HttpGet]

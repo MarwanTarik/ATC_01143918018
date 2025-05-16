@@ -1,11 +1,14 @@
 using EventManagement.Server.Dtos.EventTags;
+using EventManagement.Server.Enums;
 using EventManagement.Server.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventManagement.Server.Controllers;
 
 [Route("api/events/{eventId:int}/tags")]
 [ApiController]
+[Authorize(Policy = nameof(PoliciesEnum.RequireAnyRole))]
 public class EvenTagsController(EventTagsService eventTagsService) : ControllerBase
 {
 

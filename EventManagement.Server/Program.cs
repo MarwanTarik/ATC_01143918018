@@ -4,8 +4,16 @@ using EventManagement.Server.Enums;
 using EventManagement.Server.Middlewares;
 using EventManagement.Server.Options;
 using EventManagement.Server.Repositories;
+using EventManagement.Server.Repositories.Booking;
+using EventManagement.Server.Repositories.Events;
+using EventManagement.Server.Repositories.EventTags;
+using EventManagement.Server.Repositories.Images;
+using EventManagement.Server.Repositories.Tags;
+using EventManagement.Server.Repositories.Users;
+using EventManagement.Server.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -73,6 +81,20 @@ builder.Services.AddAuthorizationBuilder()
 
 // Register Services in DI Container
 builder.Services.AddScoped<IRepository, Repository>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<IEventsRepository, EventsRepository>();
+builder.Services.AddScoped<IEventTagsRepository, EventTagsRepository>();
+builder.Services.AddScoped<IImagesRepository, ImagesRepository>();
+builder.Services.AddScoped<ITagsRepository, TagsRepository>();
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+
+builder.Services.AddScoped<BookingService>();
+builder.Services.AddScoped<EventsService>();
+builder.Services.AddScoped<TagsService>();
+builder.Services.AddScoped<UsersService>();
+
+builder.Services.AddProblemDetails();
+builder.Services.AddSingleton<IExceptionHandler, GlobalExceptionHandler>();
 
 var app = builder.Build();
 
@@ -83,9 +105,11 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
+app.UseExceptionHandler();
+app.UseStatusCodePages();
+
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.UseMiddleware<AuthMiddleware>();
 
 app.MapControllers();

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventManagement.Server.Repositories.Events;
 
-public class EventRepository(ApplicationDbContext context) : Repository(context), IEventsRepository
+public class EventsRepository(ApplicationDbContext context) : Repository(context), IEventsRepository
 {
     private readonly DbSet<Models.Events> _dbSet = context.Set<Models.Events>();
     
