@@ -33,7 +33,7 @@ public class EventsController(EventsService eventsService) : ControllerBase
         return Ok(eventDetails);
     }
     
-    [HttpGet("user/{userId}")]
+    [HttpGet("users/{userId}")]
     public async Task<IActionResult> GetEventsByUserId(string userId)
     {
         var events = await eventsService.GetEventsByUserIdAsync(userId);
@@ -46,6 +46,7 @@ public class EventsController(EventsService eventsService) : ControllerBase
         await eventsService.AddEventAsync(eventDto, User.Id);
         return CreatedAtAction(nameof(AddEvent), eventDto);
     }
+    
     [HttpPut("{eventId:int}")]
     public async Task<IActionResult> UpdateEvent(int eventId, [FromBody] UpdateEventDto eventDto)
     {

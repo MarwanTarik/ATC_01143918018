@@ -12,21 +12,21 @@ namespace EventManagement.Server.Controllers;
 public class UsersController(UsersService usersService) : ControllerBase
 {
     [HttpGet("{id}")]
-    public async Task<UserDto?> Get(string id)
+    public async Task<IActionResult> Get(string id)
     {
-        return await usersService.GetUserByIdAsync(id);
+        var user = await usersService.GetUserByIdAsync(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+        return Ok(user);
     }
 
     [HttpPost]
-    public async Task<UserDto> Post([FromBody] UserDto value)
+    public async Task<IActionResult> Post([FromBody] UserDto value)
     {
-        return await usersService.AddUserAsync(value);
-    }
-    
-    [HttpDelete("{id}")]
-    public async Task Delete(string id)
-    {
-        await usersService.DeleteUserById(id);
+         var user = await usersService.AddUserAsync(value);
+        return CreatedAtAction(nameof(Post), user);
     }
 }
 
